@@ -1,4 +1,4 @@
-package entities;
+package utils;
 
 import java.util.Scanner;
 
@@ -39,4 +39,5 @@ public class Menu {
             }
         } while(!sair);
     }
+
 }

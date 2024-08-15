@@ -12,7 +12,7 @@ public class Pagamento {
     public Date DataAtual = new Date(System.currentTimeMillis());
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     public String DataFormatada;
-    public float ValorInicial;
+    public double ValorInicial;
     public double ValorFinal;
 
 

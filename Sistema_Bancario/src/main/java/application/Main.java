@@ -1,5 +1,6 @@
 package application;
 
+import utils.Boleto;
 import utils.Menu;
 import utils.Pagamento;
 
@@ -9,11 +10,16 @@ public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu();
 
-        //menu.MenuInicial(38.9,true);
+        menu.MenuInicial(38.9,false);
 
-        Pagamento p = new Pagamento();
-
-        Date now = new Date();
-        System.out.println(p.GerarData());
+//        Pagamento p = new Pagamento();
+//
+//        Date now = new Date();
+//        System.out.println(p.GerarData());
+//
+//        Boleto b = new Boleto();
+//
+//        b.ValorInicial = 80.0;
+//        b.Registrar();
     }
 }

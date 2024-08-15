@@ -7,9 +7,35 @@ public class Boleto extends Pagamento {
 
     private String CodigoBarras()
     {
-        int code = CodigoDeBarras.nextInt(9);
+        int code1 = CodigoDeBarras.nextInt(9);
+        int code2 = CodigoDeBarras.nextInt(9000);
+        int code3 = CodigoDeBarras.nextInt(90000);
+        int code4 = CodigoDeBarras.nextInt(9000);
+        int code5 = CodigoDeBarras.nextInt(90000);
+        int code6 = CodigoDeBarras.nextInt(9000);
+        int code7 = CodigoDeBarras.nextInt(9);
+        int code8 = CodigoDeBarras.nextInt(90000);
+        int code9 = CodigoDeBarras.nextInt(90000);
         //Código de barras
-        String CodigoDeBarras = "0339{CodigoDeBarras.Next(9).ToString()}.{CodigoDeBarras.Next(9000).ToString()}5 {CodigoDeBarras.Next(90000).ToString()}.{CodigoDeBarras.Next(9000).ToString()}5 {CodigoDeBarras.Next(90000).ToString()}.{CodigoDeBarras.Next(9000).ToString()}5 {CodigoDeBarras.Next(9).ToString()} {CodigoDeBarras.Next(90000).ToString()}.{CodigoDeBarras.Next(90000).ToString()}";
-        return CodigoDeBarras;
+
+        return "0339"+ code1 +"."+code2+".5 "+code3+"."+code4+"5 "+code5+"."+code6+"5 "+code7+" "+code8+"."+code9;
+    }
+
+    public void Registrar()
+    {
+        this.ValorFinal = this.ValorInicial * 0.88f;
+
+        System.out.println("\n");
+        System.out.println("Compras efetuadas no boleto têm 12% de desconto!!");
+
+        String boletoFormat = String.format(
+                "\n____________________________________________________________________________\n" +
+                        "Beneficiário: Projeto Loja Virtual\n" +
+                        "Valor do boleto: R$%.2f\n" +
+                        "Código de barras: %s",
+                this.ValorFinal,CodigoBarras()
+        );
+
+        System.out.println(boletoFormat);
     }
 }

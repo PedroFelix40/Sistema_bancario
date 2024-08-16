@@ -23,10 +23,8 @@ public class Pagamento {
     }
 
     public void Cancelar(){
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("\nA operação será cancelada");
-        System.out.println("Pressione ENTER para voltar ao menu...");
-        sc.next();
+        System.out.println("Voltando ao menu...");
     }
 }

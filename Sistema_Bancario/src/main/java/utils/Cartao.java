@@ -1,6 +1,6 @@
 package utils;
 
-public abstract class Cartao {
+public abstract class Cartao extends Pagamento {
     // Atributos
     public String Bandeira = "";
     public String NumeroCartao = "";

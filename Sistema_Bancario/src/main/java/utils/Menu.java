@@ -69,6 +69,9 @@ public class Menu {
 
                 case "2" :
                     System.out.println("\nPagar no cartão");
+
+                    MenuCartao(valorInformado, cartaoCadastrado);
+
                     break;
 
                 case "3" :
@@ -94,8 +97,7 @@ public class Menu {
         } while(!sair);
     }
 
-    public void MenuCartao(float ValorInformado, boolean CartaoCadastrado)
-    {
+    public void MenuCartao(double ValorInformado, boolean CartaoCadastrado)  {
         String resposta = "";
         String cadastroCartao = "";
         String outroCartao = "";
@@ -104,6 +106,194 @@ public class Menu {
         String numeroCartao = "";
         String titular = "";
         String cvv = "";
+
+        // Import do cartão de débito
+        CartaoDebito debito = new CartaoDebito();
+        debito.ValorInicial = ValorInformado;
+
+        // Import do cartão de crédito
+
+
+        do {
+            if (CartaoCadastrado == false)
+            {
+                System.out.printf("\nCadastro de cartão\n");
+
+                System.out.printf("\nQual a bandeira do cartão:");
+                bandeira = sc.next();
+
+                while (bandeira == "")
+                {
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para a bandeira do cartão:");
+                    bandeira = sc.next();
+                }
+
+                System.out.printf("\nDigite o número do cartão:");
+                numeroCartao = sc.next();
+
+                while (numeroCartao == "")
+                {
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o número do cartão:");
+                    numeroCartao = sc.next();
+                }
+
+                System.out.printf("\nInsira o nome do titular do cartão:");
+                titular = sc.next();
+
+                while (titular == "")
+                {
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o titular do cartão:");
+                    titular = sc.next();
+                }
+
+                System.out.printf("\nInforme o CVV do cartão:");
+                cvv = sc.next();
+
+                while (cvv == "")
+                {
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o CVV do cartão:");
+                    cvv = sc.next();
+                }
+
+                System.out.printf(debito.SalvarCartao(bandeira, numeroCartao, titular, cvv));
+                CartaoCadastrado = true;
+            }
+
+            System.out.printf("\nValor da compra: %.2f", ValorInformado);
+            System.out.printf("\nDados do cartão cadastrado");
+            System.out.printf("\nTitular do cartão: %s", titular);
+            System.out.printf("\nBandeira do cartão: %s", bandeira);
+            System.out.printf("\nNúmero do cartão: %s", numeroCartao);
+            System.out.printf("\nBandeira do cartão: %s\n", cvv);
+
+            System.out.printf("Escolha dentre as opções abaixo:\n" +
+                    "[1] Pagar com o Cartão de Débito\n" +
+                    "[2] Pagar com o Cartão de Crédito\n" +
+                    "[3] Voltar ao Menu de Cartão\n"
+            );
+            resposta = sc.next();
+
+//****************************************************************************************************************
+            switch (resposta)
+            {
+                case "1":
+                    if (CartaoCadastrado)
+                    {
+                        debito.Pagar(CartaoCadastrado);
+                        do
+                        {
+                            System.out.printf("\n" +
+                                            "\n[1] Finalizar compra" +
+                                            "\n[2] Cancelar Operação"
+                            );
+                            System.out.printf("Insira a opção desejada:");
+                            input = sc.next();
+                            switch (input)
+                            {
+                                case "1":
+                                    System.out.printf("\nCompra Finalizada...");
+                                    try {
+                                        Thread.sleep(3000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    // Como ainda n tenho nenhuma váriavel eu n botei pra imprimir o novo saldo ent só ta saindo do programa
+                                    System.exit(0);
+                                    break;
+                                case "2":
+                                    debito.Cancelar();
+                                    MenuInicial(ValorInformado, CartaoCadastrado);
+                                    break;
+
+                                default:
+                                    System.out.printf("\nValor inválido, tente novamente...\n");
+                                    break;
+                            }
+
+                        } while (input != "2");
+                    }
+                    else
+                    {
+                        System.out.printf("\nNão há um cartão de débito cadastrado. Pressione ENTER para voltar ao menu de cadastro:");
+                        sc.next();
+                        MenuCartao(ValorInformado, CartaoCadastrado);
+                    }
+
+                    break;
+/*
+                case "2":
+
+                    //Cartão de Crédito
+                    if (CartaoCadastrado)
+                    {
+                        pagamentoCredito.Pagar(cartaoCardastrado);
+                        do
+                        {
+                            Console.WriteLine(@$"
+                                [1] Finalizar compra
+                        [2] Cancelar Operação
+                            ");
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.WriteLine($"Insira a opção desejada:");
+                            Console.ResetColor();
+                            input = Console.ReadLine()!;
+                            switch (input)
+                            {
+                                case "1":
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine($"\nCompra Finalizada...");
+                                    Thread.Sleep(3000);
+                                    Console.Beep(2000, 2000);
+                                    Console.ResetColor();
+
+                                    // Como ainda n tenho nenhuma váriavel eu n botei pra imprimir o novo saldo ent só ta saindo do programa
+                                    Environment.Exit(0);
+                                    break;
+                                case "2":
+                                    pagamentoCredito.Cancelar();
+                                    Console.Clear();
+                                    MenuInicial(valorInformado, cartaoCardastrado);
+                                    break;
+                                default:
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.Clear();
+                                    Console.WriteLine($"Valor inválido, tente novamente...");
+                                    Console.ResetColor();
+                                    break;
+                            }
+
+                        } while (input != "2");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Não há um cartão de crédito cadastrado. Pressione ENTER para voltar ao menu de cartão:");
+                        Console.ReadLine();
+                        MenuCartao(valorInformado, cartaoCardastrado);
+                    }
+
+                    break;
+
+                case "3":
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Cancelando a operação...");
+                    Console.WriteLine($"Pressione ENTER para continuar");
+                    Console.ReadLine();
+                    Console.ResetColor();
+                    break;
+
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Clear();
+                    Console.WriteLine($"Valor inválido, tente novamente...");
+                    Console.ResetColor();
+                    break;
+
+ */
+            }
+            //****************************************************************************************************************
+
+        }while (resposta != "3");
     }
 
 }

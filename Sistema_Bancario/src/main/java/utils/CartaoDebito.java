@@ -31,7 +31,7 @@ public class CartaoDebito extends Cartao{
         return Saldo;
     }
 
-    public void setSaldo(double saldo) {
+    private void setSaldo(double saldo) {
         Saldo = saldo;
     }
 }

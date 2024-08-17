@@ -97,6 +97,7 @@ public class Menu {
         } while(!sair);
     }
 
+    // Menu para cadastrar cartão **************************
     public void MenuCartao(double ValorInformado, boolean CartaoCadastrado)  {
         String resposta = "";
         String cadastroCartao = "";
@@ -112,7 +113,8 @@ public class Menu {
         debito.ValorInicial = ValorInformado;
 
         // Import do cartão de crédito
-
+        CartaoCredito pagamentoCredito = new CartaoCredito();
+        pagamentoCredito.ValorFinal = ValorInformado;
 
         do {
             if (CartaoCadastrado == false)
@@ -220,45 +222,40 @@ public class Menu {
                     }
 
                     break;
-/*
+
                 case "2":
 
                     //Cartão de Crédito
                     if (CartaoCadastrado)
                     {
-                        pagamentoCredito.Pagar(cartaoCardastrado);
+                        pagamentoCredito.Pagar(CartaoCadastrado);
                         do
                         {
-                            Console.WriteLine(@$"
-                                [1] Finalizar compra
-                        [2] Cancelar Operação
-                            ");
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            Console.WriteLine($"Insira a opção desejada:");
-                            Console.ResetColor();
-                            input = Console.ReadLine()!;
+                            System.out.printf("\n" +
+                                    "\n[1] Finalizar compra" +
+                                    "\n[2] Cancelar Operação");
+
+                            input = sc.next();
+
                             switch (input)
                             {
                                 case "1":
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine($"\nCompra Finalizada...");
-                                    Thread.Sleep(3000);
-                                    Console.Beep(2000, 2000);
-                                    Console.ResetColor();
+                                    System.out.printf("\nCompra Finalizada...");
+                                    try {
+                                        Thread.sleep(3000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
 
                                     // Como ainda n tenho nenhuma váriavel eu n botei pra imprimir o novo saldo ent só ta saindo do programa
-                                    Environment.Exit(0);
+                                    System.exit(0);
                                     break;
                                 case "2":
                                     pagamentoCredito.Cancelar();
-                                    Console.Clear();
-                                    MenuInicial(valorInformado, cartaoCardastrado);
+                                    MenuInicial(ValorInformado, CartaoCadastrado);
                                     break;
                                 default:
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.Clear();
-                                    Console.WriteLine($"Valor inválido, tente novamente...");
-                                    Console.ResetColor();
+                                    System.out.printf("\nValor inválido, tente novamente...");
                                     break;
                             }
 
@@ -266,13 +263,13 @@ public class Menu {
                     }
                     else
                     {
-                        Console.WriteLine($"Não há um cartão de crédito cadastrado. Pressione ENTER para voltar ao menu de cartão:");
-                        Console.ReadLine();
-                        MenuCartao(valorInformado, cartaoCardastrado);
+                        System.out.printf("\nNão há um cartão de crédito cadastrado. Pressione ENTER para voltar ao menu de cartão:");
+                        sc.next();
+                        MenuCartao(ValorInformado, CartaoCadastrado);
                     }
 
                     break;
-
+/*
                 case "3":
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;

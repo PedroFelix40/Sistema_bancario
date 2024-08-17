@@ -1,30 +1,33 @@
 package utils;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class Pagamento {
     Menu menu = new Menu();
 
-    public Date DataAtual = new Date(System.currentTimeMillis());
-    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    public String DataFormatada;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     public double ValorInicial;
     public double ValorFinal;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[41m";
 
 
 
-    public Date GerarData(){
-        Date DataFinal = new Date(DataAtual.getYear(), DataAtual.getMonth(), DataAtual.getDay() + 3, DataAtual.getHours(), DataAtual.getMinutes(), DataAtual.getSeconds());
-        return DataFinal;
+    public String GerarData(){
+        Date DataFinal = new Date();
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String dataFormatada = formatter.format(DataFinal);
+        return dataFormatada;
     }
 
     public void Cancelar(){
-
-        System.out.println("\nA operação será cancelada");
+        System.out.println("\n"+ANSI_RED+"A operação será cancelada"+ANSI_RESET);
         System.out.println("Voltando ao menu...");
     }
 }

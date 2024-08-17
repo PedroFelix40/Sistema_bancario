@@ -20,7 +20,7 @@ public class CartaoDebito extends Cartao{
         else
         {
             this.ValorFinal = this.ValorInicial;
-            System.out.printf("\nO valor da compra a ser pago será de: R$%.2f e será debitado em sua conta corrente.", this.ValorFinal);
+            System.out.printf("\nO valor da compra a ser pago será de R$%.2f e será debitado em sua conta corrente.", this.ValorFinal);
             Saldo = Saldo - ValorFinal;
         }
     }

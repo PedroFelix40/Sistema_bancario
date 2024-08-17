@@ -13,7 +13,7 @@ public class Menu {
 
         // Inicio
         System.out.println("            === Bem-vindo ===");
-        System.out.printf("\nValor da compra: %.2f", valorInformado);
+        System.out.printf("\nValor da compra: R$%.2f", valorInformado);
 
         do {
             System.out.println("\n\nEscolha a forma de pagamento\n" +
@@ -33,23 +33,28 @@ public class Menu {
                         boleto.ValorInicial = valorInformado;
                         boleto.Registrar();
 
-                        System.out.println("" +
-                                "[1] Finalizar compra\n" +
-                                "[2] Cancelar Operação\n");
+                            System.out.println("" +
+                                    "[1] Finalizar compra\n" +
+                                    "[2] Cancelar Operação\n");
 
-                        System.out.printf("Insira a opção desejada...");
-                        input = sc.next();
+                            System.out.printf("\nInsira a opção desejada...");
+                            input = sc.next();
 
                         switch (input)
                         {
                             case "1":
-                                System.out.printf("\nCompra Finalizada... Seu boleto vence no dia" + boleto.GerarData());
+                                System.out.printf("\nCompra Finalizada... Seu boleto vence no dia " + boleto.GerarData());
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 System.exit(0);
                                 break;
 
                             case "2":
-                                //boleto.Cancelar();
-                                System.out.println("\nA operação será cancelada...\n");
+                                boleto.Cancelar();
+//                                System.out.println("\nA operação será cancelada...\n");
                                 try {
                                     Thread.sleep(2000);
                                 } catch (InterruptedException e) {
@@ -60,8 +65,6 @@ public class Menu {
 
                             default:
                                 System.out.printf("Opção inválida.");
-                                sc.next();
-
                                 break;
                         }
                     }while(input != "2");
@@ -90,8 +93,8 @@ public class Menu {
                         }
 
                         System.exit(0);
-                    }
                     sair = true;
+                    }
                     break;
             }
         } while(!sair);
@@ -114,46 +117,46 @@ public class Menu {
 
         // Import do cartão de crédito
         CartaoCredito pagamentoCredito = new CartaoCredito();
-        pagamentoCredito.ValorFinal = ValorInformado;
+        pagamentoCredito.ValorInicial = ValorInformado;
 
         do {
             if (CartaoCadastrado == false)
             {
                 System.out.printf("\nCadastro de cartão\n");
 
-                System.out.printf("\nQual a bandeira do cartão:");
+                System.out.printf("\nQual a bandeira do cartão: ");
                 bandeira = sc.next();
 
                 while (bandeira == "")
                 {
-                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para a bandeira do cartão:");
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para a bandeira do cartão: ");
                     bandeira = sc.next();
                 }
 
-                System.out.printf("\nDigite o número do cartão:");
+                System.out.printf("\nDigite o número do cartão: ");
                 numeroCartao = sc.next();
 
-                while (numeroCartao == "")
+                while (numeroCartao.trim().isEmpty())
                 {
-                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o número do cartão:");
-                    numeroCartao = sc.next();
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o número do cartão: ");
+                    numeroCartao = sc.nextLine();
                 }
 
-                System.out.printf("\nInsira o nome do titular do cartão:");
+                System.out.printf("\nInsira o nome do titular do cartão: ");
                 titular = sc.next();
 
                 while (titular == "")
                 {
-                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o titular do cartão:");
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o titular do cartão: ");
                     titular = sc.next();
                 }
 
-                System.out.printf("\nInforme o CVV do cartão:");
+                System.out.printf("\nInforme o CVV do cartão: ");
                 cvv = sc.next();
 
                 while (cvv == "")
                 {
-                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o CVV do cartão:");
+                    System.out.printf("\nCampo digitado inválido. Digite um valor válido para o CVV do cartão: ");
                     cvv = sc.next();
                 }
 
@@ -161,14 +164,17 @@ public class Menu {
                 CartaoCadastrado = true;
             }
 
+
             System.out.printf("\nValor da compra: %.2f", ValorInformado);
+            System.out.println();
             System.out.printf("\nDados do cartão cadastrado");
+            System.out.println();
             System.out.printf("\nTitular do cartão: %s", titular);
             System.out.printf("\nBandeira do cartão: %s", bandeira);
             System.out.printf("\nNúmero do cartão: %s", numeroCartao);
             System.out.printf("\nBandeira do cartão: %s\n", cvv);
 
-            System.out.printf("Escolha dentre as opções abaixo:\n" +
+            System.out.printf("\nEscolha dentre as opções abaixo:\n" +
                     "[1] Pagar com o Cartão de Débito\n" +
                     "[2] Pagar com o Cartão de Crédito\n" +
                     "[3] Voltar ao Menu de Cartão\n"
@@ -188,7 +194,7 @@ public class Menu {
                                             "\n[1] Finalizar compra" +
                                             "\n[2] Cancelar Operação"
                             );
-                            System.out.printf("Insira a opção desejada:");
+                            System.out.printf("\nInsira a opção desejada:");
                             input = sc.next();
                             switch (input)
                             {
@@ -204,6 +210,11 @@ public class Menu {
                                     break;
                                 case "2":
                                     debito.Cancelar();
+                                    try {
+                                        Thread.sleep(3000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                     MenuInicial(ValorInformado, CartaoCadastrado);
                                     break;
 
@@ -234,7 +245,7 @@ public class Menu {
                             System.out.printf("\n" +
                                     "\n[1] Finalizar compra" +
                                     "\n[2] Cancelar Operação");
-
+                            System.out.printf("\nInsira a opção desejada:");
                             input = sc.next();
 
                             switch (input)
@@ -252,6 +263,11 @@ public class Menu {
                                     break;
                                 case "2":
                                     pagamentoCredito.Cancelar();
+                                    try {
+                                        Thread.sleep(3000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                     MenuInicial(ValorInformado, CartaoCadastrado);
                                     break;
                                 default:
@@ -269,24 +285,12 @@ public class Menu {
                     }
 
                     break;
-/*
-                case "3":
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Cancelando a operação...");
-                    Console.WriteLine($"Pressione ENTER para continuar");
-                    Console.ReadLine();
-                    Console.ResetColor();
-                    break;
 
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Clear();
-                    Console.WriteLine($"Valor inválido, tente novamente...");
-                    Console.ResetColor();
+                    System.out.printf("Valor inválido, tente novamente...");
                     break;
 
- */
+
             }
             //****************************************************************************************************************
 

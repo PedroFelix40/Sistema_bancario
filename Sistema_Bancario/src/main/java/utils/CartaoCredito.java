@@ -26,6 +26,7 @@ public class CartaoCredito extends Cartao{
     @Override
     public void Pagar(boolean cartaoCadastrado) {
 
+        ExibirLimite();
         System.out.print("");
         System.out.print("\nInforme em quantas parcelas deseja pagar o produto: (máximo de 12 parcelas)" +
                 "\n[1x] - Sem juros" +
@@ -33,18 +34,13 @@ public class CartaoCredito extends Cartao{
                 "\n[7x - 12x] - Juros de 8%"
         );
 
-        System.out.print("\nInforme a quantidade de parcelas: ");
-        Parcelas = sc.nextInt();
+        do {
+            System.out.print("\nInforme a quantidade de parcelas. Digite entre 1 ou 12 parcelas: ");
+            Parcelas = sc.nextInt();
+        }while (this.Parcelas > 12 || this.Parcelas <= 0);
 
-        System.out.printf("%d",this.Limite);
 
-        while (this.Parcelas > 12 && this.Parcelas <= 0)
-        {
-            System.out.printf("\n\nNúmero de parcelas inválido. Digite entre 1 ou 12 parcelas: ");
-            this.Limite = sc.nextInt();
-        }
-
-        //do {
+        do {
             if (this.ValorInicial > this.Limite)
             {
                 System.out.printf("\nLimite do cartão excedido");
@@ -82,15 +78,15 @@ public class CartaoCredito extends Cartao{
                     this.Parcelas = sc.nextInt();
                 }
             }
-        //}while(this.ValorFinal > this.Limite);
+        }while(this.ValorFinal > this.Limite);
 
         if (this.Parcelas > 1)
         {
-            System.out.printf("\nTotal: R$%2f de %dx com juros.", this.ValorFinal, this.Parcelas);
+            System.out.printf("\nTotal: R$%.2f de %dx com juros.", this.ValorFinal, this.Parcelas);
         }
         else
         {
-            System.out.printf("\nTotal: R$%2f de %dx sem juros.", this.ValorFinal, this.Parcelas);
+            System.out.printf("\nTotal: R$%.2f de %dx sem juros.", this.ValorFinal, this.Parcelas);
         }
 
     }
